@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absen Kehadiran</title>
+</head>
+<body>
+
+<div class="container">
+    <h2>Hai, Dena Almaczumi 👋</h2>
+    <div class="info-box">
+        <h3>Jadwal Kehadiran Hari Ini</h3>
+        <p>Kamis, 12 September 2024</p>
+        <p>Shift 1 di PKL ACM 2024</p>
+        <span class="green-status">Sudah Tercatat</span>
+    </div>
+
+    <table width="100%">
+        <tr>
+            <td>Masuk</td>
+            <td>Pulang</td>
+        </tr>
+        <tr>
+            <td>08:00</td>
+            <td>16:00</td>
+        </tr>
+    </table>
+
+    <div class="photo-box">
+        <video id="video" width="320" height="240" autoplay></video>
+        <canvas id="canvas" style="display:none;"></canvas>
+        <p id="status-time" class="status-late">08:05:17</p>
+        <p id="late-status" class="status-late">Telat</p>
+    </div>
+
+    <div class="action-btn">
+        <button id="snap">Ambil Foto</button>
+        <button id="save" disabled>Simpan Kehadiran</button>
+    </div>
+</div>
+
+<script>
+    // Get elements
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const snap = document.getElementById('snap');
+    const save = document.getElementById('save');
+    const context = canvas.getContext('2d');
+
+    // Access the webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+            video.srcObject = stream;
+        })
+        .catch((err) => {
+            console.log("Error accessing camera: " + err);
+        });
+
+    // Take photo
+    snap.addEventListener('click', function () {
+        canvas.style.display = 'block';
+        context.drawImage(video, 0, 0, 320, 240);
+        save.disabled = false;
+    });
+
+    // Save attendance (this is just for simulation)
+    save.addEventListener('click', function () {
+        alert('Kehadiran berhasil disimpan!');
+    });
+</script>
+
+</body>
+</html>
